@@ -5,6 +5,7 @@ from sklearn import datasets
 import matplotlib.pyplot as plt
 import perceptron
 import plt_vis
+import adaline
 
 s = os.path.join('https://archive.ics.uci.edu', 'ml',
 	'machine-learning-databases',
@@ -34,8 +35,21 @@ ppn = perceptron.Perceptron(eta=0.1, n_iter=10)
 # plt.ylabel('Количество обновлений')
 # plt.show()
 
-plt_vis.plot_decision_regions(X, y, classifier=ppn)
-plot.xlabel('длина чашелистика [см]')
-plot.ylabel('длина лепестка [см]')
-plot.legend(loc='upper left')
-plot.show()
+# plt_vis.plot_decision_regions(X, y, classifier=ppn)
+# plot.xlabel('длина чашелистика [см]')
+# plot.ylabel('длина лепестка [см]')
+# plot.legend(loc='upper left')
+# plot.show()
+
+fig, ах= plt.subplots(nrows=1, ncols=2, figsize=(10, 4))
+ada1 = adaline.AdalineGD(n_iter=10, eta=0.01).fit(X, y)
+ах[0].plot(range(1, len(ada1.cost_) + 1), np.log10(ada1.cost_), marker='o')
+ах[0].set_xlabel ('Эпохи')
+ax[0].set_ylabel('log(Cyммa квадратичных ошибок)')
+ax[0].set_title('Adaline - скорость обучения 0.01')
+ada2 = AdalineGD(n_iter=10, eta=0.0001).fit(X, у)
+ax[1].plot(range(1, len(ada2.cost ) + 1), ada2.cost_, marker='o')
+ax[1].set_xlabel('Эпохи')
+ax[1].set_ylabel('Cyммa квадратичных ошибок')
+ax[1].set_title('Adaline - скорость обучения 0.0001')
+plt.show()

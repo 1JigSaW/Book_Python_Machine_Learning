@@ -1,4 +1,6 @@
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 class AdalineGD(object):
 	'''Классификатор на основе адаптивного линейного нейрона.
 	Параметры
@@ -23,6 +25,14 @@ class AdalineGD(object):
 		self.n_iter = n_iter
 		self.random_state = random_state
 
+	def net_input(self, X):
+		'''Вычисляет общий вход'''
+		return np.dot(X, self.w_[1:]) + self.w_[0]
+
+	def activation(self, X):
+		'''Вычисляет линейную активацию'''
+		return X
+
 	def fit(self, X, y):
 		'''Подгоняет к обучающим данным.
 		Параметры
@@ -38,7 +48,7 @@ class AdalineGD(object):
 		'''
 		rgen = np.random.RandomState(self.random_state)
 		self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + X.shape[1])
-		self.cost = []
+		self.cost_ = []
 		for i in range(self.n_iter):
 			net_input = self.net_input(X)
 			output = self.activation(net_input)
@@ -48,15 +58,7 @@ class AdalineGD(object):
 			cost = (errors**2).sum() / 2.0
 			self.cost_.append(cost)
 
-		def net_input(self, X):
-			'''Вычисляет общий вход'''
-			return np.dot(X, self.w_[1:]) + self.w_[0]
-
-		def activation(self, X):
-			'''Вычисляет линейную активацию'''
-			return X
-
 		def predict(self, X):
 			'''Возвращает метку класса после единого шага'''
 			return np.where(self.activation(self.net_input(X)) >= 0.0, 1, -1)
-			
+
