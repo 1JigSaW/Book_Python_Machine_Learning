@@ -3,7 +3,6 @@ import sqlite3
 import numpy as np
 import os
 
-# import HashingVectorizer from local dir
 from vectorizer import vect
 
 
@@ -36,9 +35,6 @@ db = os.path.join(cur_dir, 'reviews.sqlite')
 
 clf = update_model(db_path=db, model=clf, batch_size=10000)
 
-# Uncomment the following lines if you are sure that
-# you want to update your classifier.pkl file
-# permanently.
 
 # pickle.dump(clf, open(os.path.join(cur_dir,
 #             'pkl_objects', 'classifier.pkl'), 'wb')
